@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
+import Axios from 'axios';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import PlayerList from './components/PlayerList';
+
+import "./styles.scss";
+
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      players: [],
+      darkMode: false
+    }
+  }
+
+  componentDidMount() {
+    Axios.get('http://localhost:5000/api/players')
+    .then(res => {
+      this.setState({players: res.data});
+      console.log(this.state.players);
+    })
+  }
+
+  render() {
+    return(
+      <div className='App'>
+        <h1>Women Soccer Players</h1>
+        <PlayerList players={this.state.players} />
+      </div>
+    );
+  }
 }
 
 export default App;
