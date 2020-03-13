@@ -1,9 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from '@testing-library/react';
 import App from './App';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+test('app renders without crashing', () => {
+  render(<App />);
+});
+
+test('player list renders', () => {
+  const { getByText } = render(<App />);
+
+  getByText('Player List');
+});
+
+test('heading renders without crashing', () => {
+  const { getByText } = render(<App />);
+  
+  getByText('Women Soccer Players')
 });
